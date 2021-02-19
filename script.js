@@ -2,7 +2,7 @@ const gallery = document.querySelector("#gallery");
 const body = document.querySelector("body");
 const modalContainer = document.querySelector(".modal-container");
 
-fetch("https://randomuser.me/api/?&results=12")
+fetch("https://randomuser.me/api/?nat=us&results=12")
   .then((response) => response.json())
   .then((data) => {
     // console.log(data);
@@ -25,6 +25,8 @@ fetch("https://randomuser.me/api/?&results=12")
       
 
     });
+
+    
     
     const card = document.querySelectorAll(".card");
     console.log(card)
@@ -33,6 +35,25 @@ fetch("https://randomuser.me/api/?&results=12")
         console.log(i)
 
         console.log(data.results[i])
+
+        function cellFormatter(x) {
+          const areaCode = x.slice(0, 5)
+          const number = (x.slice(6))
+          const cellNumber = `${areaCode} ${number}`
+          console.log(cellNumber)
+          return cellNumber
+        }
+
+        function dobFormatter(x) {
+          const month = x.slice(5, 7)
+          const day = x.slice(8, 10)
+          const year = x.slice(0, 4)
+          const formattedDOB = `${month}/${day}/${year}`
+          console.log(formattedDOB)
+          return formattedDOB
+        }
+        
+        
         body.insertAdjacentHTML(
                 "beforeend",
                 `
@@ -45,7 +66,7 @@ fetch("https://randomuser.me/api/?&results=12")
                               <p class="modal-text">${data.results[i].email}</p>
                               <p class="modal-text cap">${data.results[i].location.city}</p>
                               <hr>
-                              <p class="modal-text">(555) 555-5555</p>
+                              <p class="modal-text">${cellFormatter(data.results[i].cell)}</p>
                               <p class="modal-text">
                               ${data.results[i].location.street.number} 
                               ${data.results[i].location.street.name}, 
@@ -53,7 +74,7 @@ fetch("https://randomuser.me/api/?&results=12")
                               ${data.results[i].location.state} 
                               ${data.results[i].location.postcode}
                               </p>
-                              <p class="modal-text">Birthday: 10/21/2015</p>
+                              <p class="modal-text">Birthday: ${dobFormatter(data.results[i].dob.date)}</p>
                           </div>
                       </div>
                   </div>
