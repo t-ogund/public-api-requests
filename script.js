@@ -1,6 +1,5 @@
 const gallery = document.querySelector("#gallery");
 const body = document.querySelector("body");
-const modalContainer = document.querySelector(".modal-container");
 const searchContainer = document.querySelector(".search-container");
 
 searchContainer.insertAdjacentHTML("beforeend", `<form action="#" method="get">
@@ -80,15 +79,80 @@ fetch("https://randomuser.me/api/?nat=us&results=12")
                   </div>
                       `
               );
+const modalContainer = document.querySelector(".modal-container");
+              let modal = document.querySelector(".modal");
               const modalCloseBtn = document.querySelector("#modal-close-btn");
+              let modalInfoContainer = document.querySelector(".modal-info-container");
               // const next = document.querySelector("#modal-next");
               // const prev = document.querySelector("#modal-prev");
 
 
-              // const modalToggle = document.querySelector(".modal-btn-container");
-              // modalToggle.addEventListener("click", () => {
+              const modalToggle = document.querySelector(".modal-btn-container");
+              const arrayOfCards = Array.from(card);
 
-              // })
+              modalToggle.addEventListener("click", (e) => {
+                // console.log()
+                if (e.target.classList.contains("modal-prev")) {
+                  e.target.parentElement.children[1].disabled = false;
+                  console.log("PREV")
+                  console.log(data.results[i -= 1])
+                  // console.log(i)
+                  // modalInfoContainer.remove();
+                  const modalImage = document.querySelector(".modal-img");
+                  const modalName = document.querySelector(".modal-name");
+                  const modalEmail = document.querySelectorAll(".modal-text")[0];
+                  const modalCity = document.querySelectorAll(".modal-text")[1];
+                  const cellPhone = document.querySelectorAll(".modal-text")[2];
+                  const locationDetails = document.querySelectorAll(".modal-text")[3];
+                  const modalDOB = document.querySelectorAll(".modal-text")[4];
+                  modalImage.src = `${data.results[i + 1 - 1].picture.large}`;
+                  modalName.textContent = `${data.results[i + 1 - 1].name.first} ${data.results[i + 1 - 1].name.last}`
+                  modalEmail.textContent = `${data.results[i + 1 - 1].email}`
+                  modalCity.textContent = `${data.results[i + 1 - 1].location.city}`
+                  cellPhone.textContent = `${cellFormatter(data.results[i + 1 - 1].cell)}`
+                  locationDetails.textContent = ` ${data.results[i + 1 - 1].location.street.number} 
+                                                  ${data.results[i + 1 - 1].location.street.name}, 
+                                                  ${data.results[i + 1 - 1].location.city},
+                                                  ${data.results[i + 1 - 1].location.state} 
+                                                  ${data.results[i + 1 - 1].location.postcode}`
+                  modalDOB.textContent = `Birthday: ${dobFormatter(data.results[i + 1 - 1].dob.date)}`
+
+                  
+                  if (i === 0) {
+                    e.target.disabled = true;
+                  } else if (i > 0) {
+                    e.target.disabled = false;
+                  }
+                }
+                
+                if (e.target.classList.contains("modal-next")) {
+                  e.target.parentElement.children[0].disabled = false;
+                  console.log("NEXT")
+                  // console.log(data.results[i].parentElement)
+                  console.log(data.results[i += 1])
+                  const modalImage = document.querySelector(".modal-img");
+                  const modalName = document.querySelector(".modal-name");
+                  const modalEmail = document.querySelectorAll(".modal-text")[0];
+                  const modalCity = document.querySelectorAll(".modal-text")[1];
+                  const cellPhone = document.querySelectorAll(".modal-text")[2];
+                  const locationDetails = document.querySelectorAll(".modal-text")[3];
+                  const modalDOB = document.querySelectorAll(".modal-text")[4];
+                  modalImage.src = `${data.results[i - 1 + 1].picture.large}`;
+                  modalName.textContent = `${data.results[i - 1 + 1].name.first} ${data.results[i - 1 + 1].name.last}`
+                  modalEmail.textContent = `${data.results[i - 1 + 1].email}`
+                  modalCity.textContent = `${data.results[i - 1 + 1].location.city}`
+                  cellPhone.textContent = `${cellFormatter(data.results[i - 1 + 1].cell)}`
+                  locationDetails.textContent = ` ${data.results[i - 1 + 1].location.street.number} 
+                                                  ${data.results[i - 1 + 1].location.street.name}, 
+                                                  ${data.results[i - 1 + 1].location.city},
+                                                  ${data.results[i - 1 + 1].location.state} 
+                                                  ${data.results[i - 1 + 1].location.postcode}`
+                  modalDOB.textContent = `Birthday: ${dobFormatter(data.results[i - 1 + 1].dob.date)}`
+                  if (i === 11) {
+                    e.target.disabled = true;
+                  } 
+                }
+              })
 
               modalCloseBtn.addEventListener("click", (e) => {
                 e.target.parentElement.parentElement.parentElement.remove();
@@ -104,7 +168,7 @@ fetch("https://randomuser.me/api/?nat=us&results=12")
     const arrayOfNames = Array.from(cardName);
     console.log(arrayOfNames)
     searchInput.addEventListener("keyup", (e) => {
-      console.log(cardName)
+      // console.log(cardName)
       arrayOfNames.filter(name => {
         if (name.textContent.toLowerCase().includes(e.target.value) === true) {
           name.parentElement.parentElement.style.display = "flex";
