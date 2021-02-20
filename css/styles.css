@@ -250,6 +250,8 @@ header h1 {
     .card:hover {
         background: rgba(255, 255, 255, 1);
         border: 1px solid rgba(50, 50, 50, 0.9);
+        /*Added slight box shaddow on line 254*/
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     }
 
     .card:hover .card-text {
